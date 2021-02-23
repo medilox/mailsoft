@@ -1,0 +1,69 @@
+
+<style rel="stylesheet" type="text/css" media="screen">
+
+fieldset {
+        float: left;
+        margin-top: 40px;
+        display: inline-block;
+        vertical-align: top;
+        height: 500px;
+        width: 380px;
+        text-align: left;
+        overflow: hidden;
+        border: 8px solid rgb(201, 76, 76);
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 5px 0px, rgba(0, 0, 0, 0.15) 0px 4px 15px 0px;
+}
+
+a.button1{
+display:inline-block;
+padding:0.35em 1.2em;
+border:0.1em solid #060606;
+margin:0 0.3em 0.3em 0;
+
+box-sizing: border-box;
+text-decoration:black;
+font-family:'Roboto',sans-serif;
+font-weight:350;
+color:#060606;
+text-align:left;
+transition: all 0.2s;
+border-radius: 5%;
+}
+a.button1:hover{
+color:#000000;
+background-color:#90F8CF;
+}
+@media all and (max-width:30em){
+a.button1{
+display:block;
+margin:0.4em auto;
+}
+}
+
+</style>
+
+
+<!--<div  style="height: 600px;" ng-style="{'background-image':'url(/images/images-triangle1.jpg)' , 'background-position': 'center center', 'background-size': 'cover'}">-->
+
+<div>
+<marquee behavior="alternate"><h1><FONT color="red + white"> DRFP-MINSANTE:SYSTEME DE GESTION DU COURRIER</FONT></h1></marquee>
+<form method="post"  background-color: #020>
+    <fieldset  align="left">
+        <legend align="left">Opérations</legend>
+        <h3>
+            <a href="" ui-sref="courrier" class="button1">Nouveau courrier</a>
+            <a href="reception.html" class="button1">Reception du courrier</a>
+            <a href="transmission.html" class="button1">Transmission du courrier</a>
+            <a href="traitement.html" class="button1">Traitement du courrier</a>
+            <a href="parcours.html" class="button1">Parcours du courrier</a>
+            <a href="archive.html" class="button1">Archiver les documents</a>
+            <a href="parametre.html" class="button1" ng-if="auth.hasRole('ADMIN')">Changer les paramètres de connexion</a>
+            <a href="" ui-sref="structure" class="button1" ng-if="auth.hasRole('ADMIN')">Organigramme</a>
+            <a href="" ui-sref="user" class="button1" ng-if="auth.hasRole('ADMIN')">Gestion des utilisateurs</a>
+            <a href="" class="button1" ng-click="auth.logout()">Quitter/Exit</a>
+
+        </h3>
+
+    </fieldset>
+   </form>
+</div>

@@ -1,0 +1,82 @@
+<style rel="stylesheet" type="text/css" media="screen">
+    fieldset {
+        float: left;
+        margin-top: 80px;
+        display: inline-block;
+        vertical-align: top;
+        height: 250px;
+        width: 1200px;
+        text-align: left;
+        overflow: hidden;
+        border: 8px solid rgb(201, 76, 76);
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 5px 0px, rgba(0, 0, 0, 0.15) 0px 4px 15px 0px;
+}
+
+a.button1{
+display:inline-block;
+padding:0.35em 1.2em;
+border:0.1em solid #060606;
+margin:0 0.3em 0.3em 0;
+
+box-sizing: border-box;
+text-decoration:black;
+font-family:'Roboto',sans-serif;
+font-weight:350;
+color:#060606;
+text-align:left;
+transition: all 0.2s;
+border-radius: 5%;
+}
+a.button1:hover{
+color:#000000;
+background-color:#90F8CF;
+}
+@media all and (max-width:30em){
+a.button1{
+display:block;
+margin:0.4em auto;
+}
+}
+   </style>
+
+<div>
+
+<marquee behavior="alternate"><h1><FONT color="red + white"> DRFP-MINSANTE:SYSTEME DE GESTION DU COURRIER  </FONT></h1></marquee>
+<form method="post" action="main.html" background-color: #020>
+    <fieldset  align="center">
+        <legend align="left">Structure (Organigramme)</legend>
+        <h3>
+            <p>
+            <h2><label >* Nom de la Structure [Name]</label> : <input type="text" name="nomstructure" id="nomstructure"
+                                                                      ng-model="vm.structure.name"
+                                                                      placeholder="Ex : DIRECTION DES RESSOURCES FINANCIERES ET DU PATRIMOINE" size="60" maxlength="60" /></h2>
+            <p>
+            <h2><label >* Sigle de la structure [ACRONYM]</label> : <input type="text" name="sigle structure" id="siglestructure"
+                                                                           ng-model="vm.structure.sigle"
+                                                                           placeholder="Ex : DRFP" size="10" maxlength="10" /></h2>
+            <p>
+
+                <h2><label >* Structure de rattachement [ATTACHMENT]</label> :
+
+                <!--<select id="rattachementr">
+                    <option value="valeur1"></option>
+                    <option value="valeur2" selected>CAB-MINSANTE</option>
+                    <option value="valeur2" selected>SECRETARIAT GENERAL</option>
+                </select>-->
+
+                    <select  id="rattachementr" ng-model="vm.structure.parentId"
+                            ng-options="structure.id as structure.name for structure in vm.structures">
+                        <option value="">-- choose an option --</option>
+                    </select>
+
+                    <center>
+            <p>
+                <a href="" ng-click="vm.save()" class="button1">Enregistrer[Save]</a>
+                <a href="" ui-sref="{{vm.previousState}}" class="button1">Fermer[Close]</a>
+
+        </h3>
+        </center>
+    </fieldset>
+</form>
+
+</div>

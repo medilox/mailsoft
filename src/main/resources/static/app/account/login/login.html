@@ -1,0 +1,67 @@
+
+<body id="Fconnexion">
+<marquee behavior="alternate"><FONT><FONT color="green+black"> EMMASY▶ ELECTRONIC MAILS MANAGEMENT SYSTEM </FONT> </h1></marquee>
+<h1 align="center">SYSTEME DE GESTION DU COURRIER DE LA DRFP/MINSANTE</h1>
+<form background-color: #020>
+    <fieldset>
+        <legend align="center">
+            <h2><p>USERS---UTILISATEURS</p></h2>
+        </legend>
+        <p>
+        <h2><label >Nom de l'utilisateur [User Name]</label> :
+            <input type="text" name="username" id="username" placeholder="Ex : Admin" size="30" maxlength="10"
+                   required class="form-control"
+                   ng-model="vm.credentials.username">
+        </h2>
+        </p>
+        <p>
+        <h2><label>Mot de passe [Pass word]</label> :
+            <input type="password" name="passw" id="passw"
+                   required
+                   ng-model="vm.credentials.password">
+        </h2>
+        </p>
+        <a href="" class="button1" ng-click="vm.login()">Connexion/LogIn</a>
+
+    </fieldset>
+</form>
+</body>
+
+
+<style rel="stylesheet" type="text/css" media="screen">
+
+	fieldset {
+    background-color:  none;
+    border:  1px solid #ccc;
+    margin:  2em 0;
+    padding:  1em;
+	}
+a.button1{
+display:inline-block;
+padding:0.35em 1.2em;
+border:0.1em solid #060606;
+margin:0 0.3em 0.3em 0;
+
+box-sizing: border-box;
+text-decoration:black;
+font-family:'Roboto',sans-serif;
+font-weight:350;
+color:#060606;
+text-align:left;
+transition: all 0.2s;
+border-radius: 5%;
+}
+a.button1:hover{
+color:#000000;
+background-color:#90F8CF;
+}
+@media all and (max-width:30em){
+a.button1{
+display:block;
+margin:0.4em auto;
+}
+}
+
+
+</style>
+
