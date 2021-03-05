@@ -32,7 +32,36 @@
                     return currentStateData;
                 }],
             }
-        });
+        })
+        .state('user.delete', {
+            parent: 'user',
+            url: '/{userId}/delete',
+            params : { userId: null },
+            data: {
+                authorities: ['ADMIN']
+            },
+            onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
+                $uibModal.open({
+                    templateUrl: 'app/entities/user/user-delete-dialog.html',
+                    controller: 'UserDeleteController',
+                    controllerAs: 'vm',
+                    size: 'md',
+                    resolve: {
+                        entity: ['User',  function(User) {
+                             return User.get($stateParams.userId)
+                             .then(function(response){
+                                return response.data;
+                            })
+                        }]
+                    }
+                }).result.then(function() {
+                    $state.go('user', null, { reload: 'user' });
+                }, function() {
+                    $state.go('^');
+                });
+            }]
+        })
+        ;
     }
 
 })();

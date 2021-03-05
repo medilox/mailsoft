@@ -24,15 +24,14 @@
                               onSaveError(response);
                             });
                 },
-                getAll: function(page, size, sortBy, direction, login, email, roles){
+                getAll: function(page, size, sortBy, direction, login, email){
                     return $http.get("/api/users"
                                     +"?page=" + page
                                     + "&size=" + size
                                     + "&sortBy=" + sortBy
                                     + "&direction=" + direction
                                     + "&login=" + login
-                                    + "&email=" + email
-                                    + "&roles=" + roles);
+                                    + "&email=" + email);
                 },
                 search: function(mc){
                     return $http.get("/api/users-search?mc=" + mc);

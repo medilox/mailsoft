@@ -6,7 +6,7 @@ fieldset {
         margin-top: 40px;
         display: inline-block;
         vertical-align: top;
-        height: 500px;
+        height: 600px;
         width: 380px;
         text-align: left;
         overflow: hidden;
@@ -50,7 +50,7 @@ margin:0.4em auto;
 <form method="post"  background-color: #020>
     <fieldset  align="left">
         <legend align="left">Opérations</legend>
-        <h3>
+        <h4>
             <a href="" ui-sref="courrier" class="button1">Nouveau courrier</a>
             <a href="reception.html" class="button1">Reception du courrier</a>
             <a href="transmission.html" class="button1">Transmission du courrier</a>
@@ -62,7 +62,7 @@ margin:0.4em auto;
             <a href="" ui-sref="user" class="button1" ng-if="auth.hasRole('ADMIN')">Gestion des utilisateurs</a>
             <a href="" class="button1" ng-click="auth.logout()">Quitter/Exit</a>
 
-        </h3>
+        </h4>
 
     </fieldset>
    </form>

@@ -46,10 +46,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findOneById(Long userId);
 
     @Query("select u from User u "
-            + "where (u.nom like ?1 or u.prenom like ?1 or ?1 is null) "
-            + "and (u.email like ?2) "
-            + "and u.role.name in ?3 ")
-    Page<User> findAll(String login, String email, String[] roles, Pageable pageable);
+            + "where (u.login like ?1 or ?1 is null) "
+            + "and (u.email like ?2) ")
+    Page<User> findAll(String login, String email, Pageable pageable);
 
     @Query("select u from User u "
             + "where u.nom like ?1 or u.prenom like ?1 or ?1 is null")

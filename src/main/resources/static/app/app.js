@@ -2,6 +2,7 @@ angular
 .module('myApp', [
   'ui.router',
   'angular-jwt',
+  'ui.bootstrap',
 ])
 
 .config(function($locationProvider) {

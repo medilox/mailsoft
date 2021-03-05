@@ -13,10 +13,22 @@
         vm.previousState = previousState.name;
         vm.save = save;
 
+        vm.users = [];
+        vm.sortBy = "";
+        vm.direction = "";
+        vm.login = "";
+        vm.email = "";
+        User.getAll( 0, 9999, vm.sortBy, vm.direction, vm.login, vm.email, vm.roles)
+         .then(function(response){
+               //vm.loading = false;
+               vm.users = response.data.content;
+         })
+
+
         function save () {
             if(! vm.isSaving){
                 vm.isSaving = true;
-                console.log(vm.user);
+                //console.log(vm.user);
                 if (vm.user.password !== vm.confirmPassword) {
                    vm.doNotMatch = 'ERROR';
                    vm.isSaving = false;
@@ -28,7 +40,12 @@
                     vm.errorEmailExists = null;
 
                     vm.user.email = vm.user.login + "@mailsoft.com";
-                    User.save(vm.user, onSaveSuccess, onSaveError);
+
+                    if (vm.user.id !== null) {
+                        User.update(vm.user, onSaveSuccess, onSaveError);
+                    } else {
+                        User.save(vm.user, onSaveSuccess, onSaveError);
+                    }
                 }
             }
         }

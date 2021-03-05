@@ -122,11 +122,10 @@ public class UserResource {
                                      @RequestParam(name = "sortBy", defaultValue = "createdDate") String sortBy,
                                      @RequestParam(name = "direction", defaultValue = "desc") String direction,
                                      @RequestParam(name = "login", defaultValue = "") String login,
-                                     @RequestParam(name = "email", defaultValue = "") String email,
-                                     @RequestParam(name = "roles") String[] roles
+                                     @RequestParam(name = "email", defaultValue = "") String email
                                      ) {
         log.debug("REST request to get Users");
-        return userService.findAll(page, size, sortBy, direction, login, email, roles);
+        return userService.findAll(page, size, sortBy, direction, login, email);
     }
 
     @GetMapping("/api/users-search")

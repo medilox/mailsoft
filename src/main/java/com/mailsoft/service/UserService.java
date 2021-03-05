@@ -164,7 +164,7 @@ public class UserService {
 
         user.setId(userDto.getId());
         //currentUser.setPassword(userDto.getPassword());
-        user.setLogin(userDto.getEmail());
+        user.setLogin(userDto.getLogin());
         user.setEmail(userDto.getEmail());
         user.setLangKey(userDto.getLangKey());
         user.setActivated(userDto.getActivated());
@@ -223,12 +223,12 @@ public class UserService {
         return userDtos;
     }
 
-    public Page<UserDto> findAll(Integer page, Integer size, String sortBy, String direction, String login, String email, String[] roles) {
+    public Page<UserDto> findAll(Integer page, Integer size, String sortBy, String direction, String login, String email) {
         log.debug("Request to get all Users");
 
         Pageable pageable = new PageRequest(page, size, Sort.Direction.fromString(direction), sortBy);
 
-        Page<User> users = userRepository.findAll("%"+login+"%", "%"+email+"%", roles, pageable);
+        Page<User> users = userRepository.findAll("%"+login+"%", "%"+email+"%", pageable);
 
         Page<UserDto> userDtos = users.map(user -> new UserDto().createDTO(user));
         return userDtos;

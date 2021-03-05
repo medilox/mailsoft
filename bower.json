@@ -15,5 +15,7 @@
     "tests"
   ],
   "dependencies": {
+    "bootstrap": "^4.6.0",
+    "ui-bootstrap4": "^3.0.7"
   }
 }
