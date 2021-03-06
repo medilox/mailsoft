@@ -5,10 +5,11 @@
         .module('myApp')
         .controller('UserController', UserController);
 
-    UserController.$inject = ['$scope', '$state', 'session', '$stateParams', 'previousState', 'User', 'roles'];
+    UserController.$inject = ['$scope', '$state', 'session', '$stateParams', 'previousState', 'User', 'roles', 'Structure'];
 
-    function UserController ($scope, $state, session, $stateParams, previousState, User, roles) {
+    function UserController ($scope, $state, session, $stateParams, previousState, User, roles, Structure) {
         var vm = this;
+        vm.user = {};
         vm.roles = roles;
         vm.previousState = previousState.name;
         vm.save = save;
@@ -23,6 +24,11 @@
                //vm.loading = false;
                vm.users = response.data.content;
          })
+
+        Structure.getAll()
+        .then(function(response){
+            vm.structures = response.data;
+        });
 
 
         function save () {
@@ -41,7 +47,7 @@
 
                     vm.user.email = vm.user.login + "@mailsoft.com";
 
-                    if (vm.user.id !== null) {
+                    if (vm.user.id != null) {
                         User.update(vm.user, onSaveSuccess, onSaveError);
                     } else {
                         User.save(vm.user, onSaveSuccess, onSaveError);
@@ -54,7 +60,8 @@
             vm.success = 'OK';
             vm.error = false;
             vm.isSaving = false;
-            $state.go(vm.previousState );
+            //$state.go(vm.previousState );
+            $state.reload();
         }
 
         function onSaveError (response) {
@@ -68,6 +75,18 @@
 
             else
             vm.error = true;
+        }
+
+        vm.onClickUser =  function(user){
+            if(vm.user.id == user.id)
+            vm.user = {};
+            else{
+                vm.user.id = user.id;
+                vm.user.login = user.login;
+                vm.user.email = user.email;
+                vm.user.role = user.role;
+                vm.user.structureId = user.structureId;
+            }
         }
 
     }

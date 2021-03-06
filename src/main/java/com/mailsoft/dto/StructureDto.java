@@ -17,6 +17,7 @@ public class StructureDto{
     private String name;
     private String sigle;
     private Long parentId;
+    private String parent;
     private List<StructureDto> children;
 
     private Boolean leaf = false;
@@ -44,6 +45,7 @@ public class StructureDto{
 
             if(structure.getParent() != null){
                 structureDto.setParentId(structure.getParent().getId());
+                structureDto.setParent(structure.getParent().getSigle());
             }
             else{
                 structureDto.setRoot(true);

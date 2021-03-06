@@ -14,15 +14,10 @@
 
         vm.save = save;
 
-        vm.structures = [];
-        vm.loadStructures = loadStructures;
-        function loadStructures(){
-            Structure.getAll()
-            .then(function(response){
-                vm.structures = response.data;
-            });
-        }
-        vm.loadStructures();
+        Structure.getAll()
+        .then(function(response){
+            vm.structures = response.data;
+        });
 
         function save () {
             if(! vm.isSaving){
@@ -37,13 +32,25 @@
         }
 
         function onSaveSuccess (result) {
-            //$scope.$emit('myApp:newStructure', result);
-            $state.go(vm.previousState );
+            //$state.go(vm.previousState );
+            $state.reload();
             vm.isSaving = false;
         }
 
         function onSaveError () {
             vm.isSaving = false;
         }
+
+        vm.onClickStructure =  function(structure){
+            if(vm.structure.id == structure.id)
+            vm.structure = {};
+            else{
+                vm.structure.id = structure.id;
+                vm.structure.name = structure.name;
+                vm.structure.sigle = structure.sigle;
+                vm.structure.parentId = structure.parentId;
+            }
+        }
+
     }
 })();

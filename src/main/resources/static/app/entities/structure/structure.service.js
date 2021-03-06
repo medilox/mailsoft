@@ -30,7 +30,7 @@
               get: function(id){
                     return $http.get("/api/structures/" + id);
               },
-              getByCurrentUser: function(id){
+              getByCurrentStructure: function(id){
                   return $http.get("/api/my-structure");
               },
               delete: function(id){

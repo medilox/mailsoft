@@ -46,6 +46,9 @@ public class UserService {
     private RoleRepository roleRepository;
 
     @Autowired
+    private StructureRepository structureRepository;
+
+    @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 
@@ -149,6 +152,11 @@ public class UserService {
         //user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         //user.setRoles(new HashSet<>(roleRepository.findAll()));
 
+        if(userDto.getStructureId() != null){
+            Structure structure = structureRepository.findOne(userDto.getStructureId());
+            user.setStructure(structure);
+        }
+
         Role role = roleRepository.findByName(userDto.getRole());
         if(role != null){user.setRole(role); }
 
@@ -172,6 +180,12 @@ public class UserService {
         user.setNom(userDto.getNom());
         user.setPrenom(userDto.getPrenom());
         user.setTelephone(userDto.getTelephone());
+
+        if(userDto.getStructureId() != null){
+            Structure structure = structureRepository.findOne(userDto.getStructureId());
+            user.setStructure(structure);
+        }
+
 
         Role role1 = roleRepository.findByName(userDto.getRole());
         if(role1 != null){user.setRole(role1); }

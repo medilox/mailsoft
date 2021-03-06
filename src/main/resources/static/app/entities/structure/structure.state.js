@@ -34,35 +34,6 @@
                 }],
             }
         })
-        .state('structure.edit', {
-            parent: 'structure',
-            url: '/{structureId}/edit',
-            params : { structureId: null },
-            data: {
-                authorities: ['ADMIN']
-            },
-            onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
-                $uibModal.open({
-                    templateUrl: 'app/entities/structure/structure-dialog.html',
-                    controller: 'StructureDialogController',
-                    controllerAs: 'vm',
-                    backdrop: 'static',
-                    size: 'lg',
-                    resolve: {
-                        entity: ['Structure',  function(Structure) {
-                             return Structure.get($stateParams.structureId)
-                             .then(function(response){
-                                return response.data;
-                             })
-                        }]
-                    }
-                }).result.then(function() {
-                    $state.go('structure', null, { reload: 'structure' });
-                }, function() {
-                    $state.go('^');
-                });
-            }]
-        })
         .state('structure.delete', {
             parent: 'structure',
             url: '/{structureId}/delete',

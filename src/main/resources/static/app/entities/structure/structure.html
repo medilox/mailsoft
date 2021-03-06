@@ -1,16 +1,5 @@
+
 <style rel="stylesheet" type="text/css" media="screen">
-    fieldset {
-        float: left;
-        margin-top: 80px;
-        display: inline-block;
-        vertical-align: top;
-        height: 250px;
-        width: 1200px;
-        text-align: left;
-        overflow: hidden;
-        border: 8px solid rgb(201, 76, 76);
-        box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 5px 0px, rgba(0, 0, 0, 0.15) 0px 4px 15px 0px;
-}
 
 a.button1{
 display:inline-block;
@@ -37,46 +26,108 @@ display:block;
 margin:0.4em auto;
 }
 }
-   </style>
 
-<div>
+</style>
+
 
 <marquee behavior="alternate"><h1><FONT color="red + white"> DRFP-MINSANTE:SYSTEME DE GESTION DU COURRIER  </FONT></h1></marquee>
-<form method="post" action="main.html" background-color: #020>
-    <fieldset  align="center">
-        <legend align="left">Structure (Organigramme)</legend>
-        <h3>
-            <p>
-            <h2><label >* Nom de la Structure [Name]</label> : <input type="text" name="nomstructure" id="nomstructure"
-                                                                      ng-model="vm.structure.name"
-                                                                      placeholder="Ex : DIRECTION DES RESSOURCES FINANCIERES ET DU PATRIMOINE" size="60" maxlength="60" /></h2>
-            <p>
-            <h2><label >* Sigle de la structure [ACRONYM]</label> : <input type="text" name="sigle structure" id="siglestructure"
-                                                                           ng-model="vm.structure.sigle"
-                                                                           placeholder="Ex : DRFP" size="10" maxlength="10" /></h2>
-            <p>
 
-                <h2><label >* Structure de rattachement [ATTACHMENT]</label> :
+<div class="container">
+    <div class="card mt-4">
+        <div class="card-header">
+            Informations sur la structure
+        </div>
+        <div class="card-body">
+            <div>
+                <div class="form-group row">
+                    <label for="nomutilisateur" class="col-sm-4 col-form-label">* Nom de la Structure [Name]</label>
+                    <div class="col-sm-8">
+                        <input type="text" name="nomstructure" id="nomstructure" class="form-control"
+                               ng-model="vm.structure.name"
+                               placeholder="Ex : DIRECTION DES RESSOURCES FINANCIERES ET DU PATRIMOINE" size="40" maxlength="50"  />
+                    </div>
+                </div>
 
-                <!--<select id="rattachementr">
-                    <option value="valeur1"></option>
-                    <option value="valeur2" selected>CAB-MINSANTE</option>
-                    <option value="valeur2" selected>SECRETARIAT GENERAL</option>
-                </select>-->
+                <div class="form-group row">
+                    <label for="siglestructure" class="col-sm-4 col-form-label">* Sigle de la structure [ACRONYM]</label>
+                    <div class="col-sm-8">
+                        <input type="text" name="siglestructure" id="siglestructure" class="form-control"
+                               ng-model="vm.structure.sigle"
+                               placeholder="Ex : DRFP" size="10" maxlength="10"   />
+                    </div>
+                </div>
 
-                    <select  id="rattachementr" ng-model="vm.structure.parentId"
-                            ng-options="structure.id as structure.name for structure in vm.structures">
-                        <option value="">-- choose an option --</option>
-                    </select>
+                <div class="form-group row">
+                    <label for="rattachementr" class="col-sm-4 col-form-label">* Structure de rattachement [ATTACHMENT]</label>
 
-                    <center>
-            <p>
-                <a href="" ng-click="vm.save()" class="button1">Enregistrer[Save]</a>
-                <a href="" ui-sref="{{vm.previousState}}" class="button1">Fermer[Close]</a>
+                    <div class="col-sm-8">
+                        <select  id="rattachementr" ng-model="vm.structure.parentId"
+                                 ng-options="structure.id as structure.name for structure in vm.structures" class="form-control">
+                            <option value="">-- choose a structure --</option>
+                        </select>
+                    </div>
+                </div>
 
-        </h3>
-        </center>
-    </fieldset>
-</form>
+
+                <br>
+                <center>
+                    <a href="" ng-click="vm.save()" class="button1">Enregistrer[Save]</a>
+                    <a href="" ui-sref="home" class="button1">Fermer[Close]</a>
+                </center>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="card mt-4">
+        <div class="card-header">
+            Liste des structures
+        </div>
+        <div class="card-body">
+            <table class="table table-condensed spacer">
+                <tr>
+                    <th></th>
+                    <th>Nom</th>
+                    <th>Sigle</th>
+                    <th>Structure de rattachement</th>
+                    <th class="text-right"></th>
+                </tr>
+                <tr ng-repeat="structure in vm.structures track by $index" class="clickable"
+                    ng-click="vm.onClickStructure(structure)"
+                    ng-class="{'table-active' : vm.structure.id == structure.id}">
+                    <td>
+                        <span class="">{{ $index + 1}}</span>
+                    </td>
+
+                    <td>
+                        <span class="">{{structure.name}}</span>
+                    </td>
+
+                    <td>
+                        <span class="">{{structure.sigle}}</span>
+                    </td>
+
+                    <td>
+                        <span class="">{{structure.parent}}</span>
+                    </td>
+
+                    <td class="text-right">
+                    <span class="text-nowrap">
+                        <!--<a ui-sref="structure.edit({structureId:structure.id})" class="btn btn-sm btn-primary"><span>
+                             <span>Editer</span>
+                        </span></a>
+                        <span> &nbsp;</span>-->
+                        <a ui-sref="structure.delete({structureId:structure.id})" class="btn btn-danger btn-sm" ng-if="auth.hasRole('ADMIN')">
+                            <span>
+                               <span>Supprimer</span>
+                            </span>
+                        </a>
+                    </span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
 
 </div>

@@ -63,7 +63,7 @@ public class UserDto {
 
             if(user.getStructure() != null){
                 userDto.setStructureId(user.getStructure().getId());
-                userDto.setStructure(user.getStructure().getName());
+                userDto.setStructure(user.getStructure().getSigle());
             }
 
             if(user.getRole() != null){
