@@ -29,15 +29,21 @@ text-align:left;
 transition: all 0.2s;
 border-radius: 5%;
 }
-a.button1:hover{
+a.list-group-item:hover{
 color:#000000;
 background-color:#90F8CF;
 }
 @media all and (max-width:30em){
-a.button1{
+a.list-group-item{
 display:block;
 margin:0.4em auto;
 }
+}
+
+.list-group-item {
+    position: relative;
+    display: block;
+    padding: 1.25rem 1.25rem;
 }
 
 </style>
@@ -45,25 +51,24 @@ margin:0.4em auto;
 
 <!--<div  style="height: 600px;" ng-style="{'background-image':'url(/images/images-triangle1.jpg)' , 'background-position': 'center center', 'background-size': 'cover'}">-->
 
-<div>
 <marquee behavior="alternate"><h1><FONT color="red + white"> DRFP-MINSANTE:SYSTEME DE GESTION DU COURRIER</FONT></h1></marquee>
-<form method="post"  background-color: #020>
-    <fieldset  align="left">
-        <legend align="left">Opérations</legend>
-        <h4>
-            <a href="" ui-sref="courrier" class="button1">Nouveau courrier</a>
-            <a href="reception.html" class="button1">Reception du courrier</a>
-            <a href="transmission.html" class="button1">Transmission du courrier</a>
-            <a href="traitement.html" class="button1">Traitement du courrier</a>
-            <a href="parcours.html" class="button1">Parcours du courrier</a>
-            <a href="archive.html" class="button1">Archiver les documents</a>
-            <a href="parametre.html" class="button1" ng-if="auth.hasRole('ADMIN')">Changer les paramètres de connexion</a>
-            <a href="" ui-sref="structure" class="button1" ng-if="auth.hasRole('ADMIN')">Organigramme</a>
-            <a href="" ui-sref="user" class="button1" ng-if="auth.hasRole('ADMIN')">Gestion des utilisateurs</a>
-            <a href="" class="button1" ng-click="auth.logout()">Quitter/Exit</a>
 
-        </h4>
+<div class="container-fluid">
+    <div class="mt-5 col-md-4">
+        <div class="list-group text-uppercase" id="list-tab" role="tablist">
 
-    </fieldset>
-   </form>
+
+            <a href="" ui-sref="courrier" class="list-group-item list-group-item-action ">Nouveau courrier</a>
+            <a href="reception.html" class="list-group-item list-group-item-action ">Reception du courrier</a>
+            <a href="transmission.html" class="list-group-item list-group-item-action ">Transmission du courrier</a>
+            <a href="traitement.html" class="list-group-item list-group-item-action ">Traitement du courrier</a>
+            <a href="parcours.html" class="list-group-item list-group-item-action ">Parcours du courrier</a>
+            <a href="archive.html" class="list-group-item list-group-item-action ">Archiver les documents</a>
+            <a href="parametre.html" class="list-group-item list-group-item-action " ng-if="auth.hasRole('ADMIN')">Changer les paramètres de connexion</a>
+            <a href="" ui-sref="structure" class="list-group-item list-group-item-action " ng-if="auth.hasRole('ADMIN')">Organigramme</a>
+            <a href="" ui-sref="user" class="list-group-item list-group-item-action " ng-if="auth.hasRole('ADMIN')">Gestion des utilisateurs</a>
+            <a href="" class="list-group-item list-group-item-action " ng-click="auth.logout()">Quitter/Exit</a>
+        </div>
+    </div>
+
 </div>

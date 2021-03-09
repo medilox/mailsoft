@@ -28,8 +28,8 @@ public class TokenProvider {
 
   public TokenProvider(UserDetailsService userService) {
     this.secretKey = Base64.getEncoder().encodeToString(SecurityConstants.SECRET.getBytes());
-    this.tokenValidityInMilliseconds = SecurityConstants.EXPIRATION_TIME;
-    //this.tokenValidityInMilliseconds = 60000;  //one minute
+    //this.tokenValidityInMilliseconds = SecurityConstants.EXPIRATION_TIME;
+    this.tokenValidityInMilliseconds = 60000 * 60;  //one minute * 60
     this.userService = userService;
   }
 
