@@ -4,9 +4,13 @@ import com.mailsoft.domain.Courrier;
 import com.mailsoft.domain.User;
 import com.mailsoft.domain.enumerations.NatureCourrier;
 import com.mailsoft.dto.CourrierDto;
+import com.mailsoft.dto.EtapeDto;
+import com.mailsoft.repository.EtapeRepository;
 import com.mailsoft.repository.RoleRepository;
 import com.mailsoft.repository.CourrierRepository;
 import com.mailsoft.repository.UserRepository;
+import com.mailsoft.security.SecurityUtils;
+import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +43,9 @@ public class CourrierService {
     private RoleRepository roleRepository;
 
     @Autowired
+    private EtapeService etapeService;
+
+    @Autowired
     private UserService userService;
 
 
@@ -54,8 +61,12 @@ public class CourrierService {
         Courrier courrier = new Courrier();
         courrier.setId(courrierDto.getId());
 
+        //set created date;
+        String pattern = "yyyy-MM-dd HH:mm";
+        LocalDateTime datetime = new LocalDateTime();
+        courrier.setCreatedDate(datetime.toString(pattern));
+
         courrier.setRefCourrier(courrierDto.getRefCourrier());
-        courrier.setNumCourrier(courrierDto.getNumCourrier());
         courrier.setInitiateur(courrierDto.getInitiateur());
         courrier.setObjet(courrierDto.getObjet());
         courrier.setDateEnvoi(courrierDto.getDateEnvoi());
@@ -64,12 +75,20 @@ public class CourrierService {
         courrier.setConcernes(courrierDto.getConcernes());
 
 
-        if(courrierDto.getRecuParId() != null){
-            User recuPar = userRepository.findOne(courrierDto.getRecuParId());
-            courrier.setRecuPar(recuPar);
+        if(courrierDto.getUserId() != null){
+            User user = userRepository.findOne(courrierDto.getUserId());
+            courrier.setUser(user);
         }
 
         Courrier result = courrierRepository.save(courrier);
+        if(result != null){
+            //create etape enregistrement
+            EtapeDto etapeDto = new EtapeDto();
+            etapeDto.setCourrierId(result.getId());
+            etapeDto.setStructureId(result.getUser().getStructure().getId());
+            etapeDto.setEnregistreParId(result.getUser().getId());
+            etapeService.save(etapeDto);
+        }
         return new ResponseEntity<CourrierDto>(new CourrierDto().createDTO(result), HttpStatus.CREATED);
     }
 
@@ -79,7 +98,6 @@ public class CourrierService {
         Courrier courrier = courrierRepository.findOne(courrierDto.getId());
 
         courrier.setRefCourrier(courrierDto.getRefCourrier());
-        courrier.setNumCourrier(courrierDto.getNumCourrier());
         courrier.setInitiateur(courrierDto.getInitiateur());
         courrier.setObjet(courrierDto.getObjet());
         courrier.setDateEnvoi(courrierDto.getDateEnvoi());
@@ -87,12 +105,12 @@ public class CourrierService {
         courrier.setNatureCourrier(NatureCourrier.fromValue(courrierDto.getNatureCourrier()));
         courrier.setConcernes(courrierDto.getConcernes());
 
-        if(courrierDto.getRecuParId() != null){
-            User recuPar = userRepository.findOne(courrierDto.getRecuParId());
-            courrier.setRecuPar(recuPar);
+        if(courrierDto.getUserId() != null){
+            User user = userRepository.findOne(courrierDto.getUserId());
+            courrier.setUser(user);
         }
         else{
-            courrier.setRecuPar(null);
+            courrier.setUser(null);
         }
 
         Courrier result = courrierRepository.save(courrier);
@@ -116,6 +134,19 @@ public class CourrierService {
             courrierDtos.add(new CourrierDto().createDTO(courrier));
 
         return  courrierDtos;
+    }
+
+
+    public List<CourrierDto> findAllByCurrentUser() {
+        log.debug("Request to get all Courriers");
+
+        List<CourrierDto> courrierDtos = new ArrayList<>();
+        List<Courrier> courriers = courrierRepository.findByUserIsCurrentUser(SecurityUtils.getCurrentUserLogin());
+
+        for (Courrier courrier : courriers)
+            courrierDtos.add(new CourrierDto().createDTO(courrier));
+
+        return courrierDtos;
     }
 
 
@@ -145,5 +176,4 @@ public class CourrierService {
             courrierRepository.delete(id);
         }
     }
-
 }

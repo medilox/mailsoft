@@ -47,7 +47,7 @@ public class CourrierResource {
                     courrierDto.getId() + " already exist."), HttpStatus.CONFLICT);
         }
         //automatically set user to current user
-        courrierDto.setRecuParId(userRepository.findByLoginOrEmail(SecurityUtils.getCurrentUserLogin()).getId());
+        courrierDto.setUserId(userRepository.findByLoginOrEmail(SecurityUtils.getCurrentUserLogin()).getId());
         return courrierService.save(courrierDto);
     }
 
@@ -77,7 +77,7 @@ public class CourrierResource {
     @GetMapping("/api/courriers")
     public List<CourrierDto> getAllCourriers() {
         log.debug("REST request to get list of Courriers");
-        return courrierService.findAll();
+        return courrierService.findAllByCurrentUser();
     }
 
 

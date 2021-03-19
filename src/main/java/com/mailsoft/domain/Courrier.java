@@ -7,7 +7,10 @@ package com.mailsoft.domain;
 
 import com.mailsoft.domain.enumerations.NatureCourrier;
 import lombok.*;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
@@ -33,9 +36,6 @@ public class Courrier {
     @Column(name = "refCourrier")
     private String refCourrier;
 
-    @Column(name = "numCourrier")
-    private Long numCourrier;
-
     @Column(name = "initiateur")
     private String initiateur;
 
@@ -57,17 +57,26 @@ public class Courrier {
     @Column(name = "dateReception")
     private LocalDate dateReception;
 
-
     @Column(name = "concernes")
     private String concernes;
 
+    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
+    @Column(name = "created_date")
+    private LocalDateTime createdDate;
 
-    @JoinColumn(name = "recuPar_id", referencedColumnName = "id")
+
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     @ManyToOne
-    private User recuPar;
+    private User user;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "courrier")
     private List<Etape> parcours = new ArrayList<>();
+
+    @OneToOne
+    @NotFound(action = NotFoundAction.IGNORE)
+    @JoinColumn(unique = true)
+    private Etape lastEtape;
 
     public String getDateEnvoi() {
         String pattern = "yyyy-MM-dd";
@@ -99,6 +108,22 @@ public class Courrier {
         if(dateReception!=null && !dateReception.isEmpty())
             cd = formatter.parseLocalDate(dateReception);
         this.dateReception = cd;
+    }
+
+    public String getCreatedDate() {
+        String pattern = "yyyy-MM-dd HH:mm";
+        if(createdDate != null) {
+            return createdDate.toString(pattern);
+        }
+        return null;
+    }
+
+    public void setCreatedDate(String createdDate) {
+        DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm");
+        LocalDateTime cd = null;
+        if(createdDate!=null)
+            cd = LocalDateTime.parse(createdDate, formatter);
+        this.createdDate = cd;
     }
 
     @Transient

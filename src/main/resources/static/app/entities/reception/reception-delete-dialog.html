@@ -1,0 +1,22 @@
+<form name="deleteForm" ng-submit="vm.confirmDelete(vm.etape.id)">
+    <div class="modal-header">
+        <h4 class="modal-title">Confirm cancel reception</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <div class="alert alert-danger" ng-show="vm.showErrorAlert">
+            <p>{{vm.errorMessage}}</p>
+        </div>
+
+        <p>Êtes vous sûrs de vouloir annuler cette reception ?</p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="deleteForm.$invalid" class="btn btn-danger">
+            <span class="glyphicon glyphicon-remove-circle"></span>&nbsp;<span>Delete</span>
+        </button>
+    </div>
+</form>

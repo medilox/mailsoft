@@ -11,6 +11,7 @@
         var vm = this;
         vm.courrier = entity;
         vm.previousState = previousState.name;
+        vm.idCourrier = $stateParams.idCourrier;
 
         vm.naturesCourrier = naturesCourrier;
 
@@ -36,8 +37,9 @@
             }
         }
 
-        function onSaveSuccess (result) {
-            $state.reload();
+        function onSaveSuccess (response) {
+            //$state.reload();
+            $state.go($state.current, {idCourrier: response.data.id}, {reload: true});
             vm.isSaving = false;
         }
 
@@ -45,9 +47,19 @@
             vm.isSaving = false;
         }
 
-        vm.onClickCourrier =  function(courrier){
-            if(vm.courrier.id == courrier.id)
+        vm.onClickNew = function(){
             vm.courrier = {};
+            vm.dateEnvoi = null;
+            vm.dateReception = null;
+        }
+
+        vm.onClickCourrier =  function(courrier){
+            if(vm.courrier.id == courrier.id){
+                vm.courrier = {};
+                vm.dateEnvoi = null;
+                vm.dateReception = null;
+            }
+
             else{
                 vm.courrier.id = courrier.id;
                 vm.courrier.refCourrier = courrier.refCourrier;
@@ -60,5 +72,9 @@
                 vm.courrier.concernes = courrier.concernes;
             }
         }
+
+        vm.closeAlert = function(index) {
+            vm.idCourrier = null;
+        };
     }
 })();
