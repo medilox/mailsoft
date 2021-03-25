@@ -25,6 +25,11 @@
                             });
                 },
 
+              findAllByCourrierNumOrRef: function(numCourrier, refCourrier){
+                if(!numCourrier)
+                numCourrier = 0;
+                return $http.get("/api/etapes-by-courrier?numCourrier=" + numCourrier + "&refCourrier=" + refCourrier);
+              },
               getTransmissionsByCurrentUserStructure: function(){
                 return $http.get("/api/etapes-transmissions-by-current-user-structure");
               },

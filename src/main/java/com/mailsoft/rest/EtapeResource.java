@@ -1,6 +1,9 @@
 package com.mailsoft.rest;
 
+import com.mailsoft.domain.Courrier;
+import com.mailsoft.dto.CourrierDto;
 import com.mailsoft.dto.EtapeDto;
+import com.mailsoft.repository.CourrierRepository;
 import com.mailsoft.repository.EtapeRepository;
 import com.mailsoft.repository.StructureRepository;
 import com.mailsoft.repository.UserRepository;
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,6 +31,9 @@ import java.util.Optional;
 public class EtapeResource {
 
     private final Logger log = LoggerFactory.getLogger(EtapeResource.class);
+
+    @Autowired
+    private CourrierRepository courrierRepository;
 
     @Autowired
     private EtapeService etapeService;
@@ -63,6 +70,19 @@ public class EtapeResource {
         return etapeService.save(etapeDto);
     }
 
+    @GetMapping("/api/etapes-by-courrier")
+    public List<EtapeDto> getEtapesByStructure(@RequestParam(name = "numCourrier") Long numCourrier,
+                                               @RequestParam(name = "refCourrier", defaultValue = "") String refCourrier) {
+        log.debug("REST request to get all etapes by courrier numOrRef");
+
+        Courrier courrier = courrierRepository.findOne(numCourrier) != null ? courrierRepository.findOne(numCourrier) : courrierRepository.findByRefCourrier(refCourrier);
+
+        if(courrier != null){
+            return etapeService.findByCourrier(courrier.getId());
+        }
+        return new ArrayList<>();
+    }
+
 
     @GetMapping("/api/etapes-by-structure/{structureId}")
     public List<EtapeDto> getEtapesByStructure(@PathVariable Long structureId) {
@@ -94,11 +114,11 @@ public class EtapeResource {
         return etapeService.findReceptionsByCurrentUser();
     }
 
-    @GetMapping("/api/etapes-by-courrier/{courrierId}")
+    /*@GetMapping("/api/etapes-by-courrier/{courrierId}")
     public List<EtapeDto> getEtapesByCourrier(@PathVariable Long courrierId) {
         log.debug("REST request to get all etapes");
         return etapeService.findByCourrier(courrierId);
-    }
+    }*/
 
     /**
      * GET  /etapes/:id : get the "id" etape.

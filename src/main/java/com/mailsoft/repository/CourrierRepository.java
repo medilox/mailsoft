@@ -11,4 +11,7 @@ public interface CourrierRepository extends JpaRepository<Courrier, Long> {
     @Query("select courrier from Courrier courrier " +
             "where courrier.user.login = ?1")
     List<Courrier> findByUserIsCurrentUser(String currentUserLogin);
+
+    Courrier findByRefCourrier(String refCourrier);
+
 }

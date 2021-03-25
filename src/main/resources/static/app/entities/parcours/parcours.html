@@ -1,0 +1,158 @@
+
+<style rel="stylesheet" type="text/css" media="screen">
+
+a.button1{
+display:inline-block;
+padding:0.35em 1.2em;
+border:0.1em solid #060606;
+margin:0 0.3em 0.3em 0;
+
+box-sizing: border-box;
+text-decoration:black;
+font-family:'Roboto',sans-serif;
+font-weight:350;
+color:#060606;
+text-align:left;
+transition: all 0.2s;
+border-radius: 5%;
+}
+a.button1:hover{
+color:#000000;
+background-color:#90F8CF;
+}
+@media all and (max-width:30em){
+a.button1{
+display:block;
+margin:0.4em auto;
+}
+}
+
+</style>
+<marquee behavior="alternate"><h1><FONT color="red + white"> DRFP-MINSANTE:SYSTEME DE GESTION DU COURRIER</FONT></h1></marquee>
+
+<div class="container">
+
+    <div class="">
+        <div class="card mt-4">
+            <div class="card-header">
+                <span>
+                   Parcours du courrier
+                </span>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="form-group col-sm-6">
+                        <label for="numCourrier" class="col-form-label">Numéro du courrier [Mail Code]</label>
+                        <div class="">
+                            <input type="text" name="numCourrier" id="numCourrier" class="form-control"
+                                   ng-model="vm.numCourrier"
+                                   size="30" maxlength="10" />
+                        </div>
+                    </div>
+
+                    <div class="form-group col-sm-6">
+                        <label for="referencecourier" class="col-form-label">Reférence [Reference]</label>
+                        <div class="">
+                            <input type="text" name="referencecourier" id="referencecourier" class="form-control"
+                                   ng-model="vm.refCourrier"
+                                   placeholder="Ex : REF012011" size="40" maxlength="50"  />
+                        </div>
+                    </div>
+                </div>
+
+                <!--<div class="row">
+                    <div class="form-group col-sm-6">
+                        <label for="objetcourier" class="col-form-label">Objet [Purpose]</label>
+                        <div class="">
+                            <input type="text" name="objetcourier" id="objetcourier" class="form-control"
+                                   ng-model="vm.courrier.objet"
+                                   size="30" maxlength="10" />
+                        </div>
+                    </div>
+
+                    <div class="form-group col-sm-6">
+                        <label for="concernes" class="col-form-label">Concernés [Concerned]</label>
+                        <div class="">
+                            <input type="text" name="concernes" id="concernes" class="form-control"
+                                   ng-model="vm.courrier.concernes"
+                                   size="30"/>
+                        </div>
+                    </div>
+                </div>-->
+
+                <br>
+                <center>
+                    <a href="" ui-sref="home" class="btn btn-default btn-light">Fermer[Close]</a>
+                    <a href="" ng-click="vm.findParcours()" class="button1">Rechercher</a>
+                </center>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="mx-auto">
+        <div class="card mt-4">
+            <div class="card-header">
+                Liste des étapes
+            </div>
+            <div class="card-body">
+                <table class="table table-condensed spacer">
+                    <tr>
+                        <th>Type</th>
+                        <th>Reference</th>
+                        <th>Objet</th>
+                        <th>Transmis par</th>
+                        <th>Date transmission</th>
+                        <th>Transmis à / Recu par</th>
+                        <th>Date reception</th>
+                        <th>Concernés</th>
+                        <th>Instructions</th>
+                    </tr>
+                    <tr ng-repeat="etape in vm.etapes track by $index">
+
+                        <td>
+                            <span class="" ng-if="etape.transmisParId && !etape.recuParId">Transmission</span>
+                            <span class="" ng-if="etape.recuParId">Reception</span>
+                            <span class="" ng-if="etape.enregistreParId">Creation</span>
+                        </td>
+
+                        <td>
+                            <span class="">{{etape.courrier.refCourrier}}</span>
+                        </td>
+
+                        <td>
+                            <span class="">{{etape.courrier.objet}}</span>
+                        </td>
+
+                        <td>
+                            <span class="" ng-if="etape.transmisParId || etape.enregistreParId">{{etape.transmisPar || etape.enregistrePar }} [{{etape.transmisParStructureSigle || etape.enregistreParStructureSigle}}]</span>
+                        </td>
+
+                        <td>
+                            <span class="" ng-if="etape.transmisParId || etape.enregistreParId">{{etape.transmisParDate}}</span>
+                        </td>
+
+                        <td>
+                            <span class="" ng-if="etape.transmisParId && !etape.recuParId">{{etape.structureSigle}}</span>
+                            <span class="" ng-if="etape.recuParId">{{etape.recuPar }} [{{etape.recuParStructureSigle}}]</span>
+                        </td>
+
+                        <td>
+                            <span class="" ng-if="etape.recuParId">{{etape.createdDate}}</span>
+                        </td>
+
+                        <td>
+                            <span class="">{{etape.courrier.concernes}}</span>
+                        </td>
+                        <td>
+                            <span class="">{{etape.instructions}}</span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
