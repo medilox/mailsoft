@@ -137,11 +137,13 @@ public class CourrierService {
     }
 
 
-    public List<CourrierDto> findAllByCurrentUser() {
+    public List<CourrierDto> findAllByCurrentUser(String numCourrier, String refCourrier, String objet, String concernes) {
         log.debug("Request to get all Courriers");
 
         List<CourrierDto> courrierDtos = new ArrayList<>();
-        List<Courrier> courriers = courrierRepository.findByUserIsCurrentUser(SecurityUtils.getCurrentUserLogin());
+        //List<Courrier> courriers = courrierRepository.findByUserIsCurrentUser(SecurityUtils.getCurrentUserLogin(), numCourrier, "%"+refCourrier+"%", "%"+objet+"%", "%"+concernes+"%");
+        List<Courrier> courriers = courrierRepository.findAll("%"+numCourrier+"%", "%"+refCourrier+"%", "%"+objet+"%", "%"+concernes+"%");
+        //List<Courrier> courriers = courrierRepository.findAll();
 
         for (Courrier courrier : courriers)
             courrierDtos.add(new CourrierDto().createDTO(courrier));

@@ -3,6 +3,7 @@ angular
   'ui.router',
   'angular-jwt',
   'ui.bootstrap',
+  'ngFileUpload',
 ])
 
 .config(function($locationProvider) {

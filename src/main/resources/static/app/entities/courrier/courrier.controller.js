@@ -15,7 +15,13 @@
 
         vm.naturesCourrier = naturesCourrier;
 
-        Courrier.getAll()
+
+        vm.numCourrier = "";
+        vm.refCourrier = "";
+        vm.objet = "";
+        vm.concernes = "";
+
+        Courrier.getAll(vm.numCourrier, vm.refCourrier, vm.objet, vm.concernes)
         .then(function(response){
             vm.courriers = response.data;
         });

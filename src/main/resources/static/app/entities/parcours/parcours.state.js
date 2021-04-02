@@ -19,6 +19,23 @@
             controller: 'ParcoursController',
             controllerAs: 'vm',
 
+        })
+        .state('parcours.etapes', {
+            //url: '/new',
+            params: {courrierId: null },
+            onEnter: ['$state', '$stateParams', '$uibModal', function($state, $stateParams, $uibModal) {
+                $uibModal.open({
+                    templateUrl: 'app/entities/parcours/etapes-dialog.html',
+                    controller: 'EtapesDialogController',
+                    controllerAs: 'vm',
+                    backdrop: 'false',
+                    size: 'xl',
+                }).result.then(function() {
+                    $state.go('parcours', null, { reload: 'parcours' });
+                }, function() {
+                    $state.go('parcours');
+                });
+            }]
         });
     }
 })();

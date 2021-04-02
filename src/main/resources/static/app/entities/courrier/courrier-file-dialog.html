@@ -1,0 +1,69 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()"show-validation>
+
+    <div class="modal-header">
+        <h5 class="modal-title" id="myReceptionLabel">Fichiers joints</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+    </div>
+
+
+    <div class="modal-body">
+
+        <span class="d-flex flex-row justify-content-between">
+            <span></span>
+            <a href="" class="button1" ng-click=" vm.newFile()">Joindre un fichier</a>
+        </span>
+
+        <div class="spacer">
+            <table class="table table-condensed">
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Created date</th>
+                    <th>Added by</th>
+                    <th></th>
+                </tr>
+                <tr ng-repeat="file in vm.courrierFiles track by $index">
+
+                    <td>
+                        <span class="">{{file.name}}</span>
+                    </td>
+
+                    <td>
+                        <span class="">{{file.description}}</span>
+                    </td>
+
+                    <td>
+                        <span class="">{{file.createdDate}}</span>
+                    </td>
+
+                    <td>
+                        <span class="">{{file.user}}</span>
+                    </td>
+
+                    <td class="text-right">
+                        <span class="text-nowrap">
+                        <a href=""  href="" ng-click="vm.downloadFile(file.id)" class="btn btn-light btn-sm">
+                            <span>
+                               <span>Télécharger</span>
+                            </span>
+                        </a>
+                            &nbsp;
+                        <a href="" ng-click="vm.deleteFile(file.id)" class="btn btn-danger btn-sm">
+                            <span>
+                               <span>Supprimer</span>
+                            </span>
+                        </a>
+                    </span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.close">Close</span>
+        </button>
+    </div>
+</form>

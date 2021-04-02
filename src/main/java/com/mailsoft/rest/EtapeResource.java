@@ -70,17 +70,10 @@ public class EtapeResource {
         return etapeService.save(etapeDto);
     }
 
-    @GetMapping("/api/etapes-by-courrier")
-    public List<EtapeDto> getEtapesByStructure(@RequestParam(name = "numCourrier") Long numCourrier,
-                                               @RequestParam(name = "refCourrier", defaultValue = "") String refCourrier) {
-        log.debug("REST request to get all etapes by courrier numOrRef");
-
-        Courrier courrier = courrierRepository.findOne(numCourrier) != null ? courrierRepository.findOne(numCourrier) : courrierRepository.findByRefCourrier(refCourrier);
-
-        if(courrier != null){
-            return etapeService.findByCourrier(courrier.getId());
-        }
-        return new ArrayList<>();
+    @GetMapping("/api/etapes-by-courrier/{courrierId}")
+    public List<EtapeDto> getEtapesByCourrier(@PathVariable Long courrierId) {
+        log.debug("REST request to get all etapes");
+        return etapeService.findByCourrier(courrierId);
     }
 
 

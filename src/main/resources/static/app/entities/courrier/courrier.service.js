@@ -24,15 +24,15 @@
                               onSaveError(response);
                             });
                 },
-                getAll: function(){
-                    return $http.get("/api/courriers");
-              },
-              get: function(id){
+                getAll: function(numCourrier, refCourrier, objet, concernes){
+                    return $http.get("/api/courriers?numCourrier=" + numCourrier + "&refCourrier=" + refCourrier+ "&objet=" + objet+ "&concernes=" + concernes);
+                },
+                get: function(id){
                     return $http.get("/api/courriers/" + id);
-              },
-              delete: function(id){
-                   return $http.delete("/api/courriers/" + id);
-              }
+                },
+                delete: function(id){
+                    return $http.delete("/api/courriers/" + id);
+                }
            };
       }
 })();

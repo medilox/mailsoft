@@ -25,10 +25,8 @@
                             });
                 },
 
-              findAllByCourrierNumOrRef: function(numCourrier, refCourrier){
-                if(!numCourrier)
-                numCourrier = 0;
-                return $http.get("/api/etapes-by-courrier?numCourrier=" + numCourrier + "&refCourrier=" + refCourrier);
+              findAllByCourrierId: function(courrierId){
+                return $http.get("/api/etapes-by-courrier/" + courrierId);
               },
               getTransmissionsByCurrentUserStructure: function(){
                 return $http.get("/api/etapes-transmissions-by-current-user-structure");

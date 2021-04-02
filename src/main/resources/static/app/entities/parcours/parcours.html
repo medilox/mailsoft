@@ -60,12 +60,12 @@ margin:0.4em auto;
                     </div>
                 </div>
 
-                <!--<div class="row">
+                <div class="row">
                     <div class="form-group col-sm-6">
                         <label for="objetcourier" class="col-form-label">Objet [Purpose]</label>
                         <div class="">
                             <input type="text" name="objetcourier" id="objetcourier" class="form-control"
-                                   ng-model="vm.courrier.objet"
+                                   ng-model="vm.objet"
                                    size="30" maxlength="10" />
                         </div>
                     </div>
@@ -74,85 +74,88 @@ margin:0.4em auto;
                         <label for="concernes" class="col-form-label">Concernés [Concerned]</label>
                         <div class="">
                             <input type="text" name="concernes" id="concernes" class="form-control"
-                                   ng-model="vm.courrier.concernes"
+                                   ng-model="vm.concernes"
                                    size="30"/>
                         </div>
                     </div>
-                </div>-->
+                </div>
 
                 <br>
                 <center>
                     <a href="" ui-sref="home" class="btn btn-default btn-light">Fermer[Close]</a>
-                    <a href="" ng-click="vm.findParcours()" class="button1">Rechercher</a>
+                    <button href="" ng-click="vm.search()" class="btn btn-primary button1"
+                        ng-disabled="!vm.numCourrier.length && !vm.refCourrier.length && !vm.objet.length && !vm.concernes.length">Rechercher</button>
                 </center>
             </div>
         </div>
     </div>
 
-
     <div class="mx-auto">
         <div class="card mt-4">
             <div class="card-header">
-                Liste des étapes
+                Liste des courriers
             </div>
             <div class="card-body">
                 <table class="table table-condensed spacer">
                     <tr>
-                        <th>Type</th>
+                        <th></th>
                         <th>Reference</th>
+                        <th>Numero</th>
+                        <th>Initiateur / provenance</th>
                         <th>Objet</th>
-                        <th>Transmis par</th>
-                        <th>Date transmission</th>
-                        <th>Transmis à / Recu par</th>
-                        <th>Date reception</th>
-                        <th>Concernés</th>
-                        <th>Instructions</th>
+                        <th>Nature</th>
+                        <th>Date d'envoi [Sending Date]</th>
+                        <th>Date de reception [Receiving Date]</th>
+                        <th>Concernés [Concerned]</th>
+                        <th class="text-right"></th>
                     </tr>
-                    <tr ng-repeat="etape in vm.etapes track by $index">
-
+                    <tr ng-repeat="courrier in vm.courriers track by $index" class="clickable"
+                        ng-click="vm.onClickCourrier(courrier)"
+                        ng-class="{'table-active' : vm.courrier.id === courrier.id}">
                         <td>
-                            <span class="" ng-if="etape.transmisParId && !etape.recuParId">Transmission</span>
-                            <span class="" ng-if="etape.recuParId">Reception</span>
-                            <span class="" ng-if="etape.enregistreParId">Creation</span>
+                            <span class="">{{ $index + 1}}</span>
                         </td>
 
                         <td>
-                            <span class="">{{etape.courrier.refCourrier}}</span>
+                            <span class="">{{courrier.refCourrier}}</span>
                         </td>
 
                         <td>
-                            <span class="">{{etape.courrier.objet}}</span>
+                            <span class="">{{courrier.id}}</span>
                         </td>
 
                         <td>
-                            <span class="" ng-if="etape.transmisParId || etape.enregistreParId">{{etape.transmisPar || etape.enregistrePar }} [{{etape.transmisParStructureSigle || etape.enregistreParStructureSigle}}]</span>
+                            <span class="">{{courrier.initiateur}}</span>
+                        </td>
+                        <td>
+                            <span class="">{{courrier.objet}}</span>
+                        </td>
+                        <td>
+                            <span class="">{{courrier.natureCourrier}}</span>
+                        </td>
+                        <td>
+                            <span class="">{{courrier.dateEnvoi}}</span>
+                        </td>
+                        <td>
+                            <span class="">{{courrier.dateReception}}</span>
+                        </td>
+                        <td>
+                            <span class="">{{courrier.concernes}}</span>
                         </td>
 
-                        <td>
-                            <span class="" ng-if="etape.transmisParId || etape.enregistreParId">{{etape.transmisParDate}}</span>
-                        </td>
-
-                        <td>
-                            <span class="" ng-if="etape.transmisParId && !etape.recuParId">{{etape.structureSigle}}</span>
-                            <span class="" ng-if="etape.recuParId">{{etape.recuPar }} [{{etape.recuParStructureSigle}}]</span>
-                        </td>
-
-                        <td>
-                            <span class="" ng-if="etape.recuParId">{{etape.createdDate}}</span>
-                        </td>
-
-                        <td>
-                            <span class="">{{etape.courrier.concernes}}</span>
-                        </td>
-                        <td>
-                            <span class="">{{etape.instructions}}</span>
+                        <td class="text-right">
+                        <span class="text-nowrap">
+                        <a ui-sref="parcours.etapes({courrierId:courrier.id})" class="btn btn-light btn-sm">
+                            <span>
+                               <span>Voir le parcours</span>
+                            </span>
+                        </a>
+                    </span>
                         </td>
                     </tr>
                 </table>
             </div>
         </div>
     </div>
-
-
 
 </div>

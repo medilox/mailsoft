@@ -75,9 +75,12 @@ public class CourrierResource {
      * @return the ResponseEntity with status 200 (OK) and the list of courriers in body
      */
     @GetMapping("/api/courriers")
-    public List<CourrierDto> getAllCourriers() {
+    public List<CourrierDto> getAllCourriers(@RequestParam(name = "numCourrier", defaultValue = "") String numCourrier,
+                                             @RequestParam(name = "refCourrier", defaultValue = "") String refCourrier,
+                                             @RequestParam(name = "objet", defaultValue = "") String objet,
+                                             @RequestParam(name = "concernes", defaultValue = "") String concernes) {
         log.debug("REST request to get list of Courriers");
-        return courrierService.findAllByCurrentUser();
+        return courrierService.findAllByCurrentUser(numCourrier, refCourrier, objet, concernes);
     }
 
 

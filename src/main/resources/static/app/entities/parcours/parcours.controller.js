@@ -5,15 +5,20 @@
 
     app.controller('ParcoursController', ParcoursController);
 
-    ParcoursController.$inject = ['$scope', '$state', '$stateParams', 'Etape'];
+    ParcoursController.$inject = ['$scope', '$state', '$stateParams', 'Courrier'];
 
-    function ParcoursController ($scope, $state, $stateParams, Etape) {
+    function ParcoursController ($scope, $state, $stateParams, Courrier) {
         var vm = this;
 
-        vm.findParcours = function(){
-            Etape.findAllByCourrierNumOrRef(vm.numCourrier, vm.refCourrier)
+        vm.numCourrier = "";
+        vm.refCourrier = "";
+        vm.objet = "";
+        vm.concernes = "";
+
+        vm.search = function(){
+            Courrier.getAll(vm.numCourrier, vm.refCourrier, vm.objet, vm.concernes)
             .then(function(response){
-                vm.etapes = response.data;
+                vm.courriers = response.data;
             });
         }
 
